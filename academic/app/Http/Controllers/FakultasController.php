@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Fakultas;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rules\Unique;
 
 class FakultasController extends Controller
 {
@@ -19,8 +20,6 @@ class FakultasController extends Controller
         //kirim data $result ke view fakultas?index.blade.php
 
         return view('fakultas.index')->with('fakultas', $result);
-
-    
     }
 
     /**
@@ -28,7 +27,8 @@ class FakultasController extends Controller
      */
     public function create()
     {
-        //
+        //tambah fakultas
+        return view('fakultas.create');
     }
 
     /**
@@ -36,7 +36,20 @@ class FakultasController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //dd($request);
+        //validasi input
+        $input = $request->validate([
+            "nama" => "required|unique:fakultas",
+            "dekan" => "required",
+            "singkatan" => "required"
+        ]);
+
+        //simpan
+        Fakultas::create($input);
+
+        //redirect beserta pesan success
+        return redirect()->route('fakultas.index')->with('success',
+        $request->nama.'berhasil disimpan');
     }
 
     /**

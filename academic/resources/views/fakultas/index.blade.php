@@ -2,7 +2,8 @@
 
 @section('content')
 <h4>Fakultas</h4>
-<table class="table table-striped table-bordered">
+<a href="{{ route ('fakultas.create')}}" class="btn btn-primary">Tambah</a>
+<table class="table table-striped table-bordered table-hover">
     <thead>
         <tr>
             <th>Fakultas</th>

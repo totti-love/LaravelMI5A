@@ -2,6 +2,7 @@
 
 @section('content')
 <h4>Program Studi</h4>
+<a href="{{ route ('prodi.create')}}" class="btn btn-primary">Tambah</a>
 <table class="table table-striped table-bordered">
     <thead>
         <tr>
@@ -12,7 +13,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach ( $prodi as $row )
+        @foreach ($prodi as $row )
         <tr>
             <td>{{$row['nama']}}</td>
             <td>{{$row['kaprodi']}}</td>
