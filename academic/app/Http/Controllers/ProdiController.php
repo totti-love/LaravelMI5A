@@ -38,10 +38,10 @@ class ProdiController extends Controller
     {
         //validasi input
         $input = $request->validate([
-            "nama" => "required|unique:prodi",
+            "nama" => "required|unique:prodis",
             "kaprodi" => "required",
             "singkatan" => "required",
-            "fakultas" => "required"
+            "fakultas_id" => "required"
         ]);
 
         //simpan
@@ -49,7 +49,7 @@ class ProdiController extends Controller
 
         //redirect beserta pesan success
         return redirect()->route('prodi.index')->with(' success',
-        $request->nama.'berhasil disimpan');
+        $request->nama.' berhasil disimpan');
     }
 
     /**

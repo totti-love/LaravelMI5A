@@ -1,22 +1,33 @@
 @extends('layouts.main')
 
 @section('content')
-<h4>Fakultas</h4>
-<form action="{{route('prodi.store')}}" method="post">
-    @csrf
-    Nama
-    <input type="text" name="nama" class="form-control mb-2">
-    Kaprodi
-    <input type="text" name="kaprodi" class="form-control mb-2">
-    Singkatan
-    <input type="text" name="singkatan" class="form-control mb-2">
-    Fakultas
-    <select type="text" name="" class="form-control mb-2">
-        @foreach ($fakultas as $item)
-            <option value="{{$item['id']}}">{{$item['nama']}}</option>
-        @endforeach
-    </select>
-    
-    <button type="submit" class="btn btn-primary">Simpan</button>
-</form>
+    <h4>Prodi</h4>
+    <form action="{{ route('prodi.store') }}" method="post">
+        @csrf
+        Nama
+        @error('nama')
+{{$message}}
+        @enderror
+        <input type="text" name="nama" id="" class="form-control mb-2">
+        Kaprodi
+                @error('kaprodi')
+{{$message}}
+        @enderror
+        <input type="text" name="kaprodi" id="" class="form-control mb-2">
+        Singkatan
+                @error('singkatan')
+{{$message}}
+        @enderror
+        <input type="text" name="singkatan" id="" class="form-control mb-2">
+        Fakultas
+        @error('fakultas_id')
+            <span class="text-danger">({{ $message }})</span>
+        @enderror
+        <select name="fakultas_id" class="form-control">
+            @foreach ($fakultas as $item)
+                <option value="{{ $item['id'] }}"> {{ $item['nama']}}</option>
+            @endforeach
+        </select>
+        <button type="submit" class="btn btn-primary">Simpan</button>
+    </form>
 @endsection

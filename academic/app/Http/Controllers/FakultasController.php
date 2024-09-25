@@ -49,7 +49,7 @@ class FakultasController extends Controller
 
         //redirect beserta pesan success
         return redirect()->route('fakultas.index')->with('success',
-        $request->nama.'berhasil disimpan');
+        $request->nama.' berhasil disimpan');
     }
 
     /**
@@ -63,9 +63,11 @@ class FakultasController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Fakultas $fakultas)
+    public function edit($id)
     {
-        //
+        $fakultas = Fakultas::find($id);
+        //dd($fakultas);
+        return view('fakultas.edit')->with('fakultas', $fakultas);
     }
 
     /**
