@@ -1,16 +1,30 @@
 @extends('layouts.main')
 
 @section('content')
-<h4>Fakultas</h4>
-<form action="{{route('fakultas.store')}}" method="post">
-    @csrf
-    Nama
-    <input type="text" name="nama" class="form-control mb-2">
-    Dekan
-    <input type="text" name="dekan" class="form-control mb-2">
-    Singkatan
-    <input type="text" name="singkatan" class="form-control mb-2">
-    
-    <button type="submit" class="btn btn-primary">Simpan</button>
-</form>
+    <h4>FAKULTAS</h4>
+    <form action="{{ route('fakultas.update',$row['id']) }}" method="post">
+        @csrf
+        Nama
+        @error('nama')
+        {{$message}}
+        @enderror
+        <input type="text" name="nama" id="" class="form-control mb-2"
+        value="{{$fakultas['nama']}}">
+
+        Dekan
+        @error('dekan')
+        {{$message}}
+        @enderror
+        <input type="text" name="dekan" id="" class="form-control mb-2"
+        value="{{$fakultas['dekan']}}">
+
+        singkatan
+        @error('singkatan')
+        {{$message}}
+        @enderror
+        <input type="text" name="singkatan" id="" class="form-control mb-2"
+        value="{{$fakultas['singkatan']}}">
+
+        <button type="submit" class="btn btn-primary">Simpan</button>
+    </form>
 @endsection

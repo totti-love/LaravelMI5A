@@ -2,8 +2,9 @@
 
 @section('content')
 <h4> Edit Fakultas</h4>
-<form action="{{route('fakultas.store')}}" method="post">
+<form action="{{route('fakultas.update', $fakultas['id'])}}" method="post">
     @csrf
+    @method('PUT');
     Nama
     <input type="text" name="nama" class="form-control mb-2" value="{{$fakultas['nama']}}">
     Dekan
