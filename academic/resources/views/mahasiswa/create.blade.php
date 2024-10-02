@@ -18,6 +18,7 @@
     <input type="text" name="hp" class="form-control mb-2">
     Alamat
     <input type="text-area" name="alamat" class="form-control mb-2">
+    Program Studi
     <select name="prodi_id" class="form-control">
             @foreach ($prodi as $item)
                 <option value="{{ $item['id'] }}"> {{ $item['nama']}}</option>

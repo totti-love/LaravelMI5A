@@ -68,17 +68,36 @@ class MahasiswaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Mahasiswa $mahasiswa)
+    public function edit(Mahasiswa $id)
     {
-        //
+        $mahasiswa = Mahasiswa::find($id);
+        $prodi = Prodi::all();
+        //dd($fakultas);
+        return view('mahasiswa.edit')->with('mahasiswa', $prodi)
+                                           ->with('prodi',$prodi);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Mahasiswa $mahasiswa)
+    public function update(Request $request, Mahasiswa $id)
     {
-        //
+       $mahasiswa = Mahasiswa::find($id);
+        //dd($prodi);
+        $input = $request->validate([
+            "nama" => "required",
+            "tanggal_lahir" => "required",
+            "tempat_lahir" => "required",
+            "email" => "required",
+            "hp" => "required",
+            "alamat" => "required",
+            "prodi_id" => "required"
+        ]);
+        //update data
+        $mahasiswa->update($input);
+        //redirect beserta pesan sukses
+        return redirect()->route('mahasiswa.index')->with('success',
+        $request->nama.' berhasil diubah');
     }
 
     /**

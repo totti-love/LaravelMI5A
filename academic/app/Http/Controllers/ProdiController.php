@@ -77,7 +77,7 @@ class ProdiController extends Controller
      */
     public function update(Request $request,  $id)
     {
-       $prodi = Prodi::find($id);
+       $prodi = Prodi::find(id: $id);
         //dd($prodi);
         $input = $request->validate([
             "nama" => "required",
@@ -94,8 +94,11 @@ class ProdiController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Prodi $prodi)
+    public function destroy( $id)
     {
-        //
+        $prodi = prodi::find($id);
+       // dd($fakultas);
+       $prodi->delete();
+       return redirect()->route('prodi.index')->with('success','Data prodi berhasil dihapus');
     }
 }
