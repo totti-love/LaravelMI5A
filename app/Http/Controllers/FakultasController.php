@@ -99,7 +99,7 @@ class FakultasController extends Controller
         return redirect()->route('fakultas.index')->with('success',' Data Fakultas Berhasil Dihapus');
     }
 
-     public function getFakultas(){
+    public function getFakultas(){
         $response['data'] = Fakultas::all();
         $response['message'] = 'List data fakultas';
         $response['success'] = true;

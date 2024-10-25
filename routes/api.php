@@ -10,6 +10,6 @@ Route::get('/user', function (Request $request) {
 
 })->middleware('auth:sanctum');
 
-Route::get('fakultas', [FakultasController::class, 'fakultas']);
+Route::get('fakultas', [FakultasController::class, 'getFakultas']);
 
 
