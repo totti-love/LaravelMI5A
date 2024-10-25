@@ -14,4 +14,6 @@ Route::get('/user', function (Request $request) {
 
 Route::get('fakultas', [FakultasController::class, 'getFakultas']);
 
+Route::post('fakultas', [FakultasController::class, 'storeFakultas']);
+
 
