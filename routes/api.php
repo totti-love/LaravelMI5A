@@ -16,4 +16,4 @@ Route::get('fakultas', [FakultasController::class, 'getFakultas']);
 
 Route::post('fakultas', [FakultasController::class, 'storeFakultas']);
 
-
+Route::delete('fakultas/{id}', [FakultasController::class, 'destroyFakultas']);
