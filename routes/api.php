@@ -19,3 +19,5 @@ Route::post('fakultas', [FakultasController::class, 'storeFakultas']);
 Route::delete('fakultas/{id}', [FakultasController::class, 'destroyFakultas']);
 
 Route::post('register', [AuthController::class, 'register']);
+
+Route::post('login', [AuthController::class, 'login']);

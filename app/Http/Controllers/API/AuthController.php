@@ -1,9 +1,12 @@
 <?php
 
 namespace App\Http\Controllers\API;
-
+use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Response;
+
 
 class AuthController extends Controller
 {
@@ -23,5 +26,20 @@ class AuthController extends Controller
         $success['name'] = $user->name;
 
         return response()->json($success, Response::HTTP_CREATED);
+    }
+
+    public function login(Request $request)
+    {
+        if(Auth::attempt([
+            'email' => $request->email,
+            'password' => $request->password
+        ])) {
+            $user = Auth::user();
+            $success['token'] = $user->createToken('MDPApp')->plainTextToken;
+            $success['name'] = $user->name;
+            return response()->json($success, 201);
+        } else {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
     }
 }
