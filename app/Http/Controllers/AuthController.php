@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers;
 use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -34,9 +34,9 @@ class AuthController extends Controller
             'email' => $request->email,
             'password' => $request->password
         ])) {
-            $user = Auth::user();
-            $success['token'] = $user->createToken('MDPApp')->plainTextToken;
-            $success['name'] = $user->name;
+            $user = Auth::user(); //ambil data user dari tabel user
+            $success['token'] = $user->createToken('MDPApp')->plainTextToken; //buat token
+            $success['name'] = $user->name; //respon nama user
             return response()->json($success, 201);
         } else {
             return response()->json(['error' => 'Unauthorized'], 401);
