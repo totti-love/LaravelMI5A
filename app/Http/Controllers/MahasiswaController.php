@@ -13,7 +13,7 @@ class MahasiswaController extends Controller
      */
     public function index()
     {
-       //panggil model fakultas
+        //panggil model fakultas
         $result = Mahasiswa::all();
         //dd($result);
 
@@ -52,8 +52,10 @@ class MahasiswaController extends Controller
         Mahasiswa::create($input);
 
         //redirect beserta pesan success
-        return redirect()->route('mahasiswa.index')->with('success',
-        $request->nama.' berhasil disimpan');
+        return redirect()->route('mahasiswa.index')->with(
+            'success',
+            $request->nama . ' berhasil disimpan'
+        );
     }
 
     /**
@@ -62,7 +64,7 @@ class MahasiswaController extends Controller
     public function show(Mahasiswa $mahasiswa)
     {
         //dd($mahasiswa);
-        return view('mahasiswa.show')->with('mahasiswa',$mahasiswa);
+        return view('mahasiswa.show')->with('mahasiswa', $mahasiswa);
     }
 
     /**
@@ -74,7 +76,7 @@ class MahasiswaController extends Controller
         $prodi = Prodi::all();
         //dd($fakultas);
         return view('mahasiswa.edit')->with('mahasiswa', $prodi)
-                                           ->with('prodi',$prodi);
+            ->with('prodi', $prodi);
     }
 
     /**
@@ -82,7 +84,7 @@ class MahasiswaController extends Controller
      */
     public function update(Request $request, Mahasiswa $id)
     {
-       $mahasiswa = Mahasiswa::find($id);
+        $mahasiswa = Mahasiswa::find($id);
         //dd($prodi);
         $input = $request->validate([
             "nama" => "required",
@@ -96,8 +98,10 @@ class MahasiswaController extends Controller
         //update data
         $mahasiswa->update($input);
         //redirect beserta pesan sukses
-        return redirect()->route('mahasiswa.index')->with('success',
-        $request->nama.' berhasil diubah');
+        return redirect()->route('mahasiswa.index')->with(
+            'success',
+            $request->nama . ' berhasil diubah'
+        );
     }
 
     /**
@@ -106,5 +110,49 @@ class MahasiswaController extends Controller
     public function destroy(Mahasiswa $mahasiswa)
     {
         //
+    }
+
+    public function getMahasiswa()
+    {
+        $response['data'] = Mahasiswa::all();
+        $response['message'] = 'List data fakultas';
+        $response['success'] = true;
+
+        return response()->json($response, 200);
+    }
+
+    public function storeFakultas(Request $request)
+    {
+        $input = $request->validate([
+            "npm" => "required|unique:mahasiswas",
+            "nama" => "required",
+            "tanggal_lahir" => "required",
+            "tempat_lahir" => "required",
+            "email" => "required",
+            "hp" => "required",
+            "alamat" => "required",
+            "prodi_id" => "required",
+            "foto" => "nullable|image|mimes:jpg,jpeg,png,webp|max:2048"
+        ]);
+        // Cek apakah ada file foto yang diupload
+        if ($request->hasFile('foto')) {
+            //upload foto
+            $fotopath = $request->file('foto')->store('images', 'public');
+
+            $input['foto'] = $fotopath;
+        }
+
+        //simpan
+        Mahasiswa::create($input);
+        $hasil = Mahasiswa::create($input);
+        if ($hasil) { // jika data berhasil disimpan
+            $response['success'] = true;
+            $response['message'] = $request->nama . " berhasil disimpan";
+            return response()->json($response, 201); // 201 Created
+        } else {
+            $response['success'] = false;
+            $response['message'] = $request->nama . " gagal disimpan";
+            return response()->json($response, 400); // 400 Bad Request
+        }
     }
 }

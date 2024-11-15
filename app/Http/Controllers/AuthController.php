@@ -25,7 +25,7 @@ class AuthController extends Controller
         $success['token'] = $user->createToken('MDPApp')->plainTextToken;
         $success['name'] = $user->name;
 
-        return response()->json($success, Response::HTTP_CREATED);
+        return response()->json($success, 200);
     }
 
     public function login(Request $request)
@@ -35,7 +35,11 @@ class AuthController extends Controller
             'password' => $request->password
         ])) {
             $user = Auth::user(); //ambil data user dari tabel user
-            $success['token'] = $user->createToken('MDPApp')->plainTextToken; //buat token
+            if($user->role == 'admin'){
+                $success['token'] = $user->createToken('MDPApp', ['create', 'read', 'update', 'delete'])->plainTextToken; //buat token
+            }else{
+                $success['token'] = $user->createToken('MDPApp', [ 'read'])->plainTextToken;
+            } 
             $success['name'] = $user->name; //respon nama user
             return response()->json($success, 201);
         } else {

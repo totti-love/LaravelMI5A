@@ -27,11 +27,15 @@ return new class extends Migration
         });
     }
 
+   
+
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('mahasiswas');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('foto');
+        });
     }
 };
